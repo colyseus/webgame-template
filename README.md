@@ -1,29 +1,10 @@
-# Welcome to Colyseus!
+**This is just an experiment!**
 
-This project has been created using [⚔️ `create-colyseus-app`](https://github.com/colyseus/create-colyseus-app/) - an npm init template for kick starting a Colyseus project in TypeScript.
+Experimenting with APIs for an authentication system and its relationship with [#594](https://github.com/colyseus/colyseus/issues/594)
 
-[Documentation](http://docs.colyseus.io/)
+**Objective of this experiment is to:**
 
-## :crossed_swords: Usage
-
-```
-npm start
-```
-
-## Structure
-
-- `index.ts`: main entry point, register an empty room handler and attach [`@colyseus/monitor`](https://github.com/colyseus/colyseus-monitor)
-- `src/rooms/MyRoom.ts`: an empty room handler for you to implement your logic
-- `src/rooms/schema/MyRoomState.ts`: an empty schema used on your room's state.
-- `loadtest/example.ts`: scriptable client for the loadtest tool (see `npm run loadtest`)
-- `package.json`:
-    - `scripts`:
-        - `npm start`: runs `ts-node-dev index.ts`
-        - `npm test`: runs mocha test suite
-        - `npm run loadtest`: runs the [`@colyseus/loadtest`](https://github.com/colyseus/colyseus-loadtest/) tool for testing the connection, using the `loadtest/example.ts` script.
-- `tsconfig.json`: TypeScript configuration file
-
-
-## License
-
-MIT
+- Experiment with a nice user-facing API
+- Provide OAuth integration (via [grant](https://github.com/simov/grant) package)
+- Storing and retrieving user data via the database module (from [#594](https://github.com/colyseus/colyseus/issues/594))
+- JWT encoding/decoding (via [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken))
