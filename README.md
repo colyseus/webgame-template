@@ -1,4 +1,4 @@
-**This is just an experiment!**
+**This is just an experiment - A work-in-progress that is likely to change**
 
 Experimenting with APIs for an authentication system and its relationship with [#594](https://github.com/colyseus/colyseus/issues/594)
 
