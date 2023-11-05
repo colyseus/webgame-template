@@ -1,4 +1,4 @@
-import { oauth } from "../auth/oauth";
+import { jwt, oauth } from "../auth/oauth";
 import { User } from "./database";
 
 oauth.addProvider('discord', {
@@ -15,3 +15,5 @@ oauth.onCallback(async (data, provider) => {
     email: profile.email,
   });
 });
+
+export const middleware = jwt.middleware();
