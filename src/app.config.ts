@@ -3,13 +3,15 @@ import path from "path";
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
-import { Request, jwt, oauth } from "./auth/oauth";
 
 /**
  * Import your Room files
  */
 import { MyRoom } from "./rooms/MyRoom";
 import { User } from "./config/database";
+
+import "./config/auth.config";
+import { Request, oauth, JsonWebToken } from "@colyseus/auth";
 
 export default config({
 
@@ -47,12 +49,9 @@ export default config({
      */
     app.use("/colyseus", monitor());
 
-    const apiRoutes = express.Router();
-    apiRoutes.use(jwt.middleware());
-    apiRoutes.get("/", (req: Request, res) => {
+    app.get("/requires_auth", JsonWebToken.middleware(), (req: Request, res) => {
       res.json(req.auth);
     });
-    app.use("/api", apiRoutes);
 
     app.use(oauth.prefix, oauth.callback());
   },
