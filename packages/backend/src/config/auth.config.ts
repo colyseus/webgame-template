@@ -1,7 +1,7 @@
 import { JsonWebToken, oauth } from "@colyseus/auth";
 import { User } from "./database";
 
-JsonWebToken.options.secret = "secret";
+JsonWebToken.settings.secret = "secret";
 
 oauth.addProvider('discord', {
   key: "799645393566695465",
