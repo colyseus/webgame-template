@@ -18,9 +18,3 @@ oauth.onCallback(async (data, provider) => {
     email: profile.email,
   });
 });
-
-export const middleware = JsonWebToken.middleware({
-  getToken: (req) => {
-    return req.headers['authorization'];
-  }
-});

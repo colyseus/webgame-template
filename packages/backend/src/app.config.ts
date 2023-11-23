@@ -4,14 +4,13 @@ import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
 
+import { Request, auth, oauth, JsonWebToken } from "@colyseus/auth";
+import "./config/auth";
+
 /**
  * Import your Room files
  */
 import { MyRoom } from "./rooms/MyRoom";
-import { User } from "./config/database";
-
-import "./config/auth.config";
-import { Request, oauth, JsonWebToken } from "@colyseus/auth";
 
 export default config({
 
@@ -25,22 +24,21 @@ export default config({
 
   initializeExpress: (app) => {
     /**
-     * Bind your custom express routes here:
-     * Read more: https://expressjs.com/en/starter/basic-routing.html
+     * Use @colyseus/playground
+     * (It is not recommended to expose this route in a production environment)
      */
-    app.get("/hello_world", (req, res) => {
-      res.send("It's time to kick ass and chew bubblegum!");
+    if (process.env.NODE_ENV !== "production") {
+        app.use("/playground", playground);
+    }
+
+    app.get("/profile", JsonWebToken.middleware(), (req: Request, res) => {
+      res.json(req.auth);
     });
 
-    app.use("/", express.static(path.resolve(__dirname, "..", "public")));
+    app.use(auth.prefix, auth.routes());
 
-    // /**
-    //  * Use @colyseus/playground
-    //  * (It is not recommended to expose this route in a production environment)
-    //  */
-    // if (process.env.NODE_ENV !== "production") {
-    //     app.use("/", playground);
-    // }
+    // OAuth providers
+    app.use(oauth.prefix, oauth.callback());
 
     /**
      * Use @colyseus/monitor
@@ -48,12 +46,6 @@ export default config({
      * Read more: https://docs.colyseus.io/tools/monitor/#restrict-access-to-the-panel-using-a-password
      */
     app.use("/colyseus", monitor());
-
-    app.get("/requires_auth", JsonWebToken.middleware(), (req: Request, res) => {
-      res.json(req.auth);
-    });
-
-    app.use(oauth.prefix, oauth.callback());
   },
 
   beforeListen: () => {

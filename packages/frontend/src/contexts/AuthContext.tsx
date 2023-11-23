@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { client } from '../core/Networking';
 
 // TODO: bring your user model here
 interface User {
@@ -35,21 +36,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // };
 
   const logout = () => {
-    // signOut(auth);
-    // setUser(null);
+    client.auth.signOut();
   };
 
   useEffect(() => {
-    // const unsubscribe = auth.onAuthStateChanged(authUser => {
-    //   console.log("onAuthStateChanged =>", authUser);
+    const unsubscribe = client.auth.onChange((authData) => {
+      setIsLoading(false);
+      setUser(authData?.user || null);
+      console.log("SET USER DATA!", authData?.user);
+    });
 
-    //   setIsLoading(false);
-    //   setUser(authUser);
-    // });
-
-    // return () => unsubscribe();
+    return () => unsubscribe();
   }, []);
-
 
   return (
     <AuthContext.Provider value={{ user, isLoading, logout }}>

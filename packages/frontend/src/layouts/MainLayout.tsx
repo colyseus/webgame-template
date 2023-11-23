@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import templateLogo from '/template-logo.png';
+import { useAuth } from '../contexts/AuthContext';
 
 const getNavLinkClassName = ({ isActive, isPending }: { isActive: boolean, isPending: boolean }) => {
   const className = "flex items-center justify-center flex-grow hover:bg-gray-700 transition-colors duration-100 w-full border-b border-gray-700";
@@ -10,10 +11,23 @@ const getNavLinkClassName = ({ isActive, isPending }: { isActive: boolean, isPen
 };
 
 function MainLayout() {
+  const { user, isLoading } = useAuth();
+
   return (
-    <div className="text-slate-200 h-screen flex flex-col">
-      <header className="w-full text-center">
-        <Link to={'/'}><img src={templateLogo} className="logo h-24 m-auto p-4" alt="Logo" /></Link>
+    <div className={`text-slate-200 h-screen flex flex-col ${(isLoading) ? "cursor-wait" : ""}` }>
+      <header className="w-full text-center flex">
+        <div className="flex-grow">
+          <Link to={'/'}><img src={templateLogo} className="logo h-24 m-auto p-4" alt="Logo" /></Link>
+
+        </div>
+
+        <div className="p-8">
+          {(user)
+            ? <Link to={'/profile'}>user.email</Link>
+            : <>
+                <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>
+              </>}
+        </div>
       </header>
 
       <main className="flex flex-grow">
