@@ -1,10 +1,11 @@
 import express from "express";
 import path from "path";
+import cors from "cors";
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
 
-import { Request, auth, oauth, JsonWebToken } from "@colyseus/auth";
+import { Request, auth, oauth, JWT } from "@colyseus/auth";
 import "./config/auth";
 
 /**
@@ -31,14 +32,13 @@ export default config({
         app.use("/playground", playground);
     }
 
-    app.get("/profile", JsonWebToken.middleware(), (req: Request, res) => {
+    app.get("/profile", JWT.middleware(), (req: Request, res) => {
       res.json(req.auth);
     });
 
-    app.use(auth.prefix, auth.routes());
-
-    // OAuth providers
-    app.use(oauth.prefix, oauth.callback());
+    // Auth + OAuth providers
+    const corsMiddleware =  cors({ credentials: true, origin: true, });
+    app.use(auth.prefix, corsMiddleware, auth.routes());
 
     /**
      * Use @colyseus/monitor

@@ -1,12 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { client } from '../core/Networking';
-
-// TODO: bring your user model here
-interface User {
-  id: string;
-  email: string;
-  displayName: string;
-}
+import type { User } from '../../../backend/src/config/database';
 
 interface AuthContextType {
   user: User | null;
@@ -21,7 +15,6 @@ export const AuthContext = createContext<AuthContextType>({
   // login: () => { },
   logout: () => { }
 });
-
 
 export function useAuth() {
   return useContext(AuthContext);

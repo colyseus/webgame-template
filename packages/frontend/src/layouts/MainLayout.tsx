@@ -23,7 +23,7 @@ function MainLayout() {
 
         <div className="p-8">
           {(user)
-            ? <Link to={'/profile'}>user.email</Link>
+            ? <Link to={'/profile'}>{user.name}</Link>
             : <>
                 <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>
               </>}

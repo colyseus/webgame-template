@@ -1,6 +1,6 @@
 import { Collection, Database } from "@colyseus/database";
 
-interface User extends Collection {
+export interface User extends Collection {
   name: string;
   email: string;
   discord_id: string;
