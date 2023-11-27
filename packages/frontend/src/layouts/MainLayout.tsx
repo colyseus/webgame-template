@@ -16,17 +16,22 @@ function MainLayout() {
   return (
     <div className={`text-slate-200 h-screen flex flex-col ${(isLoading) ? "cursor-wait" : ""}` }>
       <header className="w-full text-center flex">
-        <div className="flex-grow">
-          <Link to={'/'}><img src={templateLogo} className="logo h-24 m-auto p-4" alt="Logo" /></Link>
+        {/* Logo */}
+        <Link to={'/'} className="ml-auto">
+          <img src={templateLogo} className="logo h-24 m-auto p-6" alt="Logo" />
+        </Link>
 
-        </div>
-
-        <div className="p-8">
-          {(user)
-            ? <Link to={'/profile'}>{user.name}</Link>
-            : <>
-                <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>
-              </>}
+        {/* Login / Register / Profile */}
+        <div className="ml-auto p-8 flex-end">
+          {(isLoading)
+            ? "Loading..."
+            : (user)
+              ? <>
+                  <Link to={'/profile'}>{user.name || "Anonymous"}</Link>
+                </>
+              : <>
+                  <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>
+                </>}
         </div>
       </header>
 

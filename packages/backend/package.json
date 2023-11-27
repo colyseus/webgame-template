@@ -34,11 +34,11 @@
   },
   "dependencies": {
     "@colyseus/auth": "preview",
-    "@colyseus/core": "^0.15.11-alpha.1",
+    "@colyseus/core": "preview",
     "@colyseus/database": "^0.0.10",
     "@colyseus/monitor": "^0.15.0",
     "@colyseus/playground": "^0.15.3",
-    "@colyseus/tools": "^0.15.0",
+    "@colyseus/tools": "preview",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-jwt": "^8.4.1",
@@ -46,6 +46,6 @@
     "grant": "^5.4.22"
   },
   "overrides": {
-    "@colyseus/core": "^0.15.11-alpha.1"
+    "@colyseus/core": "preview"
   }
 }

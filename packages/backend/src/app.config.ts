@@ -12,6 +12,7 @@ import "./config/auth";
  * Import your Room files
  */
 import { MyRoom } from "./rooms/MyRoom";
+import { OAuthProviderName } from "@colyseus/auth/build/oauth";
 
 export default config({
 
@@ -39,6 +40,19 @@ export default config({
     // Auth + OAuth providers
     const corsMiddleware =  cors({ credentials: true, origin: true, });
     app.use(auth.prefix, corsMiddleware, auth.routes());
+
+    app.use('/auth/provider/:provider', (req: Request, res, next) => {
+      const provider: OAuthProviderName = req.params.provider as any;
+      if (oauth.providers[provider]) {
+        next();
+      } else {
+        if (process.env.NODE_ENV !== "production") {
+          res.status(404).send(`Configuration missing for "${provider}" OAuth provider. Please`);
+        } else {
+          res.status(404).send('Not found');
+        }
+      }
+    });
 
     /**
      * Use @colyseus/monitor

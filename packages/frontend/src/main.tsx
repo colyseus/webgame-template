@@ -13,6 +13,7 @@ import Game from './game/Game.tsx';
 import SignIn from './pages/auth/SignIn.tsx';
 import CreateAccount from './pages/auth/CreateAccount.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
+import Profile from './pages/auth/Profile.tsx';
 
 // function RequireAuth({ children }: { children: JSX.Element }) {
 //   let auth = useAuth();
@@ -29,7 +30,6 @@ import { AuthProvider } from './contexts/AuthContext.tsx';
 //   return children;
 // }
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +41,7 @@ const router = createBrowserRouter([
       { path: "/leaderboard", element: <Leaderboard /> },
       { path: "/credits", element: <Credits /> },
       { path: "/play", element: <Game /> },
+      { path: "/profile", element: <Profile /> },
 
       { path: "/sign-in", element: <SignIn /> },
       { path: "/create-account", element: <CreateAccount /> },
