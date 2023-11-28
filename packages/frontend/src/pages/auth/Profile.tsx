@@ -21,7 +21,7 @@ function Profile() {
 			Email: {user?.email} <br />
 			Locale: {user?.locale} <br />
 
-			<button onClick={onLogoutClick} className="mt-4">Logout</button>
+			<button onClick={onLogoutClick} className="mt-4 p-2 border rounded border-slate-500 hover:border-slate-400">Logout</button>
 		</>
 	)
 }
