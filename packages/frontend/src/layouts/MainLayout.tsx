@@ -35,7 +35,7 @@ function MainLayout() {
         </div>
       </header>
 
-      <main className="flex flex-grow">
+      <main className="flex flex-grow overflow-hidden">
         <div className="flex w-48 border-t border-gray-700">
           <nav className="flex flex-col h-full flex-grow justify-between items-center">
             <NavLink className={getNavLinkClassName} to={'/page1'}>Page 1</NavLink>
@@ -46,7 +46,7 @@ function MainLayout() {
           </nav>
         </div>
 
-        <section className="flex-grow bg-gray-800 p-8 w-full">
+        <section className="flex-grow bg-gray-800 p-8 w-full h-full overflow-auto">
           <Outlet />
         </section>
       </main>

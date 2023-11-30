@@ -9,9 +9,18 @@ export interface User extends Collection {
   anonymous: boolean;
 }
 
+export interface MonthlyScore extends Collection {
+  user_id: number;
+  score: number;
+}
+
 export const db = new Database<{
-  users: User
-}>();
+  users: User,
+  monthly_score: MonthlyScore,
+}>({
+  log: ['error', 'query'],
+});
 
 export const User = db.collection("users");
+export const MonthlyScore = db.collection("monthly_score");
 

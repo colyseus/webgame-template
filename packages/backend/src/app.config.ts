@@ -1,18 +1,15 @@
-import express from "express";
-import path from "path";
-import cors from "cors";
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
 
-import { Request, auth, oauth, JWT } from "@colyseus/auth";
+import { Request, auth, JWT } from "@colyseus/auth";
 import "./config/auth";
 
 /**
  * Import your Room files
  */
 import { MyRoom } from "./rooms/MyRoom";
-import { OAuthProviderName } from "@colyseus/auth/build/oauth";
+import { MonthlyScore } from "./config/database";
 
 export default config({
 
@@ -21,7 +18,6 @@ export default config({
      * Define your room handlers:
      */
     gameServer.define('my_room', MyRoom);
-
   },
 
   initializeExpress: (app) => {
@@ -37,22 +33,13 @@ export default config({
       res.json(req.auth);
     });
 
-    // Auth + OAuth providers
-    const corsMiddleware =  cors({ credentials: true, origin: true, });
-    app.use(auth.prefix, corsMiddleware, auth.routes());
+    app.get('/leaderboard', async (req, res) => {
+      const scores = await MonthlyScore.query().selectAll().orderBy("score", "desc").execute();
+      res.json(scores);
+    })
 
-    app.use('/auth/provider/:provider', (req: Request, res, next) => {
-      const provider: OAuthProviderName = req.params.provider as any;
-      if (oauth.providers[provider]) {
-        next();
-      } else {
-        if (process.env.NODE_ENV !== "production") {
-          res.status(404).send(`Configuration missing for "${provider}" OAuth provider. Please`);
-        } else {
-          res.status(404).send('Not found');
-        }
-      }
-    });
+    // Auth + OAuth providers
+    app.use(auth.prefix, auth.routes());
 
     /**
      * Use @colyseus/monitor

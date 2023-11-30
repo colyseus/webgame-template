@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { client } from "../../core/Networking";
+import { Navigate } from "react-router-dom";
 
 function CreateAccount() {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // navigate to root ("/") once authenticated.
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
