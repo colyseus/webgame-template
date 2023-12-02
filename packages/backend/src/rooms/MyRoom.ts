@@ -2,6 +2,7 @@ import { Room, Client, ClientArray } from "@colyseus/core";
 import { Schema, MapSchema, type } from "@colyseus/schema";
 import { JWT } from "@colyseus/auth";
 import { User, MonthlyScore } from "../config/database";
+import { Selectable } from "@colyseus/database/lib";
 
 export class Player extends Schema {
   @type("string") name: string;
@@ -38,6 +39,8 @@ export class MyRoom extends Room<MyRoomState> {
 
     const player = new Player();
 
+    console.log(client.auth);
+
     if (client.auth.guest) {
       player.name = "Guest";
 
@@ -51,16 +54,24 @@ export class MyRoom extends Room<MyRoomState> {
     this.state.players.set(client.sessionId, player);
   }
 
-  async onLeave (client: Client<any, User>, consented: boolean) {
+  async onLeave (client: Client<any, Selectable<User>>, consented: boolean) {
     console.log(client.sessionId, "left!");
     const player = this.state.players.get(client.sessionId);
 
     if (client.auth.id) {
       console.log("Saving score for user:", client.auth.id, { name: player.name, score: player.score, });
-      await MonthlyScore.upsert({ user_id: client.auth.id }, {
-        name: player.name,
-        score: player.score,
-      });
+
+      // get existing score for this month
+      const existingScore = await MonthlyScore.query()
+        .selectAll()
+        .where("user_id", "=", client.auth.id)
+        .executeTakeFirst();
+
+      // update score if it's higher than the existing one
+      if (!existingScore || existingScore.score < player.score) {
+        await MonthlyScore.upsert({ user_id: client.auth.id }, { score: player.score, });
+      }
+
     }
 
     this.state.players.delete(client.sessionId);

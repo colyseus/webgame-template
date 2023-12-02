@@ -34,7 +34,11 @@ export default config({
     });
 
     app.get('/leaderboard', async (req, res) => {
-      const scores = await MonthlyScore.query().selectAll().orderBy("score", "desc").execute();
+      const scores = await MonthlyScore.query()
+        .selectAll()
+        .innerJoin("users", "users.id", "monthly_score.user_id")
+        .orderBy("score", "desc")
+        .execute();
       res.json(scores);
     })
 

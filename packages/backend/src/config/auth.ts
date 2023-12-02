@@ -46,6 +46,7 @@ oauth.addProvider('discord', {
 });
 
 oauth.onCallback(async (data, provider) => {
+  console.log(data);
   const profile = data.profile;
   return await User.upsert({
     discord_id: profile.id,

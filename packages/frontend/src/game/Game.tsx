@@ -39,7 +39,10 @@ function Game() {
 				? <div>Loading...</div>
 				: <>
 						<h1 className="text-xl font-semibold">roomId: {roomRef.current?.roomId}</h1>
-						<h2>Highest score on this session: {roomRef.current?.state.highestScore}</h2>
+						<ul className="ml-6 list-disc">
+							<li>Score is stored in the database once player leave the room.</li>
+							<li>Anonymous and guests are not stored.</li>
+						</ul>
 
 						<button onClick={onIncrementScore} className="mt-4 p-4 rounded bg-green-500 text-green-900 hover:text-green-100 hover:bg-green-700 transition">Increment my score</button>
 

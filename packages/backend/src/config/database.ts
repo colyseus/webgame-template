@@ -23,4 +23,3 @@ export const db = new Database<{
 
 export const User = db.collection("users");
 export const MonthlyScore = db.collection("monthly_score");
-
