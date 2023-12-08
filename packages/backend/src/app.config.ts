@@ -2,7 +2,7 @@ import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
 
-import { Request, auth, JWT } from "@colyseus/auth";
+import { Request, auth } from "@colyseus/auth";
 import "./config/auth";
 
 /**
@@ -29,7 +29,7 @@ export default config({
         app.use("/playground", playground);
     }
 
-    app.get("/profile", JWT.middleware(), (req: Request, res) => {
+    app.get("/protected", auth.middleware(), (req: Request, res) => {
       res.json(req.auth);
     });
 

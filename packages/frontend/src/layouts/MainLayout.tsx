@@ -27,7 +27,7 @@ function MainLayout() {
             ? "Loading..."
             : (user)
               ? <>
-                  <Link to={'/profile'}>{user.name || "Anonymous"}</Link>
+                  <Link to={'/profile'}>{user.name || user.email || "Anonymous"}</Link>
                 </>
               : <>
                   <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>

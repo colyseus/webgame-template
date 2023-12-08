@@ -1,12 +1,13 @@
-import { JWT, auth, oauth } from "@colyseus/auth";
+import { JWT, auth } from "@colyseus/auth";
 import { User } from "./database";
+import { resend } from "./email";
 
 JWT.settings.secret = "secret";
 
 /**
  * Email / Password Authentication
  */
-auth.settings.onFindByEmail = async (email) => {
+auth.settings.onFindUserByEmail = async (email) => {
   console.log("@colyseus/auth: onFindByEmail =>", { email });
   return await User.query()
     .selectAll()
@@ -14,7 +15,7 @@ auth.settings.onFindByEmail = async (email) => {
     .executeTakeFirst();
 };
 
-auth.settings.onRegister = async (email, password, options) => {
+auth.settings.onRegisterWithEmailAndPassword = async (email, password, options) => {
   console.log("@colyseus/auth: onRegister =>", { email, password, ...options });
 
   // Validate custom "options"
@@ -36,16 +37,29 @@ auth.settings.onRegister = async (email, password, options) => {
   });
 }
 
+auth.settings.onForgotPassword = async (email: string, htmlContents: string, resetPasswordLink: string) => {
+  await resend.emails.send({
+    from: 'hello@mule.games',
+    to: email,
+    subject: '[My Game]: Reset password',
+    html: htmlContents
+  });
+}
+
+auth.settings.onResetPassword = async (email: string, password: string) => {
+  await User.update({ password }).where("email", "=", email).execute();
+}
+
 /**
  * OAuth providers
  */
-oauth.addProvider('discord', {
+auth.oauth.addProvider('discord', {
   key: "799645393566695465",
   secret: "Kjv9bvAa9ZRBe8LBM5ZJ6bJsH0o44HdT",
   scope: ['identify', 'email'],
 });
 
-oauth.onCallback(async (data, provider) => {
+auth.oauth.onCallback(async (data, provider) => {
   console.log(data);
   const profile = data.profile;
   return await User.upsert({

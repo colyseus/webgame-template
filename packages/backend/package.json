@@ -34,12 +34,12 @@
   "dependencies": {
     "@colyseus/auth": "preview",
     "@colyseus/core": "preview",
-    "@colyseus/database": "^0.0.12",
     "@colyseus/monitor": "^0.15.0",
     "@colyseus/playground": "^0.15.3",
     "@colyseus/tools": "preview",
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "resend": "^2.0.0"
   },
   "overrides": {
     "@colyseus/core": "preview"
