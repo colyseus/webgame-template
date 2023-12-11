@@ -8,7 +8,7 @@ function Game() {
 	const roomRef = useRef<Room<MyRoomState>>();
 
 	const [isLoading, setIsLoading] = useState(true);
-	const [players, setPlayers] = useState({} as any);
+	const [players, setPlayers] = useState({} as any); // TODO: use ToJSON<> type
 
 	useEffect(() => {
 		const roomRequest = client.joinOrCreate<MyRoomState>("my_room", {});
@@ -50,7 +50,7 @@ function Game() {
 
 						<h3 className="mb-4 text-xl font-semibold">Players</h3>
 
-						<div className="flex gap-2">
+						<div className="flex flex-wrap gap-2">
 							{(Object.keys(players).sort((a, b) => players[b].score - players[a].score).map((sessionId) => (
 								<span key={sessionId} className={`${(sessionId === roomRef.current?.sessionId) ? "bg-blue-300 text-blue-800" : "bg-slate-700"} mb-2 shadow-md p-4 rounded-lg `}>
 									{players[sessionId].name} - Score: {players[sessionId].score}
