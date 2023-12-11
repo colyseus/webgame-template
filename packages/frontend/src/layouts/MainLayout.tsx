@@ -11,7 +11,7 @@ const getNavLinkClassName = ({ isActive, isPending }: { isActive: boolean, isPen
 };
 
 function MainLayout() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, logout } = useAuth();
 
   return (
     <div className={`text-slate-200 h-screen flex flex-col ${(isLoading) ? "cursor-wait" : ""}` }>
@@ -27,7 +27,7 @@ function MainLayout() {
             ? "Loading..."
             : (user)
               ? <>
-                  <Link to={'/profile'}>{user.name || user.email || "Anonymous"}</Link>
+                  <Link to={'/profile'}>{user.name || user.email || "Anonymous"}</Link> (<Link to={'/'} onClick={logout} className="text-yellow-500">Logout</Link>)
                 </>
               : <>
                   <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>
