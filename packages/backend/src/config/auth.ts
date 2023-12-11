@@ -39,9 +39,9 @@ auth.settings.onRegisterWithEmailAndPassword = async (email, password, options) 
 
 auth.settings.onForgotPassword = async (email: string, htmlContents: string, resetPasswordLink: string) => {
   await resend.emails.send({
-    from: 'hello@mule.games',
+    from: 'web-template@colyseus.dev',
     to: email,
-    subject: '[My Game]: Reset password',
+    subject: '[Colyseus Web Template]: Reset password',
     html: htmlContents
   });
 }
