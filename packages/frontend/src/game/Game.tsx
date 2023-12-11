@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Client, Room } from "colyseus.js";
-import { MyRoomState, Player } from "../../../backend/src/rooms/MyRoom";
+import { Room } from "colyseus.js";
 
-const client = new Client("http://localhost:2567");
+import { MyRoomState, Player } from "../../../backend/src/rooms/MyRoom";
+import { client } from '../core/Networking';
 
 function Game() {
 	const roomRef = useRef<Room<MyRoomState>>();
