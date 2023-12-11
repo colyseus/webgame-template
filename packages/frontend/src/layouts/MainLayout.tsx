@@ -18,16 +18,16 @@ function MainLayout() {
       <header className="w-full text-center flex">
         {/* Logo */}
         <Link to={'/'} className="ml-auto">
-          <img src={templateLogo} className="logo h-24 m-auto p-6" alt="Logo" />
+          <img src={templateLogo} className="logo h-28 m-auto p-6" alt="Logo" />
         </Link>
 
         {/* Login / Register / Profile */}
-        <div className="ml-auto p-8 flex-end">
+        <div className="ml-auto p-8 flex-end my-auto">
           {(isLoading)
             ? "Loading..."
             : (user)
               ? <>
-                  <Link to={'/profile'}>{user.name || user.email || "Anonymous"}</Link> (<Link to={'/'} onClick={logout} className="text-yellow-500">Logout</Link>)
+                  <Link to={'/profile'} className="underline">{user.name || user.email || "Anonymous"}</Link> (<Link to={'/'} onClick={logout} className="text-yellow-500">Logout</Link>)
                 </>
               : <>
                   <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>

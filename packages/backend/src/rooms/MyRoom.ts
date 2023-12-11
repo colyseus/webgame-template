@@ -39,8 +39,6 @@ export class MyRoom extends Room<MyRoomState> {
 
     const player = new Player();
 
-    console.log(client.auth);
-
     if (client.auth.guest) {
       player.name = "Guest";
 
