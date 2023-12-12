@@ -1,4 +1,4 @@
-import { Room, Client, ClientArray } from "@colyseus/core";
+import { Room, Client } from "@colyseus/core";
 import { Schema, MapSchema, type } from "@colyseus/schema";
 import { JWT } from "@colyseus/auth";
 import { User, MonthlyScore } from "../config/database";

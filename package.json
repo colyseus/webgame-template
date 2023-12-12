@@ -7,7 +7,9 @@
     "start": "npm start --workspaces",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/colyseus/webgame-template.git"
@@ -26,5 +28,8 @@
   "homepage": "https://github.com/colyseus/webgame-template#readme",
   "overrides": {
     "@colyseus/core": "preview"
+  },
+  "devDependencies": {
+    "@colyseus/cloud": "^1.0.10"
   }
 }
