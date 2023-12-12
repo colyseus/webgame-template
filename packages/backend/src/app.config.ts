@@ -9,7 +9,7 @@ import "./config/auth";
  * Import your Room files
  */
 import { MyRoom } from "./rooms/MyRoom";
-import { MonthlyScore } from "./config/database";
+import { db, MonthlyScore } from "./config/database";
 
 export default config({
 
@@ -53,9 +53,26 @@ export default config({
     app.use("/colyseus", monitor());
   },
 
-  beforeListen: () => {
+  beforeListen: async () => {
+    //
+    // TODO:
+    // @colyseus/database migrations are not fully implemented yet.
+    //
+
+    try {
+      await db.schema.createTable("monthly_score")
+        .addColumn("id", "integer")
+        .addColumn("user_id", "integer")
+        .addColumn("score", "integer")
+        .execute();
+
+    } catch (e) {
+      // ignore
+    }
+
     /**
      * Before before gameServer.listen() is called.
      */
   }
+
 });

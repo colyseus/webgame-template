@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/colyseus/webgame-template/issues"
   },
-  "homepage": "https://github.com/colyseus/webgame-template#readme"
+  "homepage": "https://github.com/colyseus/webgame-template#readme",
+  "overrides": {
+    "@colyseus/core": "preview"
+  }
 }

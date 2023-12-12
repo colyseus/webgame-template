@@ -38,7 +38,7 @@ function Leaderboard() {
                     {index + 1}
                   </th>
                   <td className="px-6 py-4">
-                    {entry.name} ({entry.user_id})
+                    {entry.name} (id: {entry.user_id})
                   </td>
                   <td className="px-6 py-4">
                     {entry.score}

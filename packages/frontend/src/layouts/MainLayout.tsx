@@ -15,9 +15,9 @@ function MainLayout() {
 
   return (
     <div className={`text-slate-200 h-screen flex flex-col ${(isLoading) ? "cursor-wait" : ""}` }>
-      <header className="w-full text-center flex">
+      <header className="w-full flex">
         {/* Logo */}
-        <Link to={'/'} className="ml-auto">
+        <Link to={'/'}>
           <img src={templateLogo} className="logo h-28 m-auto p-6" alt="Logo" />
         </Link>
 

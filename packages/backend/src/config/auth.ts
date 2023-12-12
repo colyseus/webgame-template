@@ -37,7 +37,7 @@ auth.settings.onRegisterWithEmailAndPassword = async (email, password, options) 
   });
 }
 
-auth.settings.onForgotPassword = async (email: string, htmlContents: string, resetPasswordLink: string) => {
+auth.settings.onForgotPassword = async (email: string, htmlContents: string/* , resetPasswordLink: string */) => {
   await resend.emails.send({
     from: 'web-template@colyseus.dev',
     to: email,
