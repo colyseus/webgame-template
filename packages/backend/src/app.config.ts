@@ -43,7 +43,7 @@ export default config({
     app.get('/leaderboard', async (req, res) => {
       const scores = await MonthlyScore.query()
         .selectAll()
-        .innerJoin("users", "users.id", "monthly_score.user_id")
+        .innerJoin("users", "users.id", "monthly_scores.user_id")
         .orderBy("score", "desc")
         .execute();
       res.json(scores);
@@ -67,8 +67,18 @@ export default config({
     //
 
     try {
-      await db.schema.createTable("monthly_score")
-        .addColumn("id", "integer")
+      await db.schema.createTable("users")
+        .addColumn("id", "integer", (col) => col.primaryKey())
+        .addColumn("name", "text")
+        .addColumn("email", "text")
+        .addColumn("password", "text")
+        .addColumn("discord_id", "text")
+        .addColumn("locale", "text")
+        .addColumn("anonymous", "integer")
+        .execute();
+
+      await db.schema.createTable("monthly_scores")
+        .addColumn("id", "integer", (col) => col.primaryKey())
         .addColumn("user_id", "integer")
         .addColumn("score", "integer")
         .execute();

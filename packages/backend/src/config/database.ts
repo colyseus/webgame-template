@@ -16,12 +16,12 @@ export interface MonthlyScore extends Collection {
 
 export const db = new Database<{
   users: User,
-  monthly_score: MonthlyScore,
+  monthly_scores: MonthlyScore,
 }>({
   log: ['error', 'query'],
 });
 
 export const User = db.collection("users");
-export const MonthlyScore = db.collection("monthly_score");
+export const MonthlyScore = db.collection("monthly_scores");
 
 export default db;
