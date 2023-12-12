@@ -1,3 +1,4 @@
+import express from "express";
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
@@ -28,6 +29,12 @@ export default config({
     if (process.env.NODE_ENV !== "production") {
         app.use("/playground", playground);
     }
+
+    //
+    // Serving the frontend build
+    // This is for convenience only, frontend should be served from a CDN or another server.
+    //
+    app.use("/", express.static(__dirname + "/../frontend/dist"));
 
     app.get("/protected", auth.middleware(), (req: Request, res) => {
       res.json(req.auth);
