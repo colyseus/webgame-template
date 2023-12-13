@@ -24,13 +24,10 @@ auth.settings.onRegisterWithEmailAndPassword = async (email, password, options) 
   if (options.custom_data) { additionalData.custom_data = JSON.stringify(options.custom_data); }
   if (options.locale) { additionalData.locale = options.locale; }
 
-  console.log({
-    email,
-    password,
-    ...additionalData,
-  });
+  const name = options.name || email.split("@")[0];
 
   return await User.insert({
+    name,
     email,
     password,
     ...additionalData,
