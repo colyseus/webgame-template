@@ -36,7 +36,7 @@ function Game() {
   return (
     <>
 			{(isLoading)
-				? <div>Loading...</div>
+				? <div>Joining...</div>
 				: <>
 						<h1 className="text-xl font-semibold">roomId: {roomRef.current?.roomId}</h1>
 						<ul className="ml-6 list-disc">

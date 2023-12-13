@@ -4,13 +4,17 @@ import { client } from '../core/Networking';
 
 function Play() {
   const [profileResponse, setProfileResponse] = useState<any>(null);
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
 
   const onClickRequestProtectedRoute = async () => {
+    setIsRequestLoading(true);
     try {
       const response = await client.http.get("/protected");
       setProfileResponse(response.data);
     } catch (e: any) {
       setProfileResponse({ error: e.message });
+    } finally {
+      setIsRequestLoading(false);
     }
   };
 
@@ -24,7 +28,7 @@ function Play() {
           </Link>
         </div>
         <div className="mt-4">
-          <button onClick={onClickRequestProtectedRoute} className="p-2 border rounded border-slate-500 hover:border-slate-400">
+          <button onClick={onClickRequestProtectedRoute} className="p-2 border rounded border-slate-500 hover:border-slate-400" disabled={isRequestLoading}>
             Request <code>/protected</code> backend route
           </button>
 
