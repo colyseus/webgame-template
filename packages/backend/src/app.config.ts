@@ -34,7 +34,8 @@ export default config({
     // Serving the frontend build
     // This is for convenience only, frontend should be served from a CDN or another server.
     //
-    app.use("/*", express.static(__dirname + "/../../frontend/dist"));
+    app.use("/", express.static(__dirname + "/../../frontend/dist"));
+    app.get("*", (req, res) => res.redirect("/")); // single-page application
 
     app.get("/protected", auth.middleware(), (req: Request, res) => {
       res.json(req.auth);
