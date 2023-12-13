@@ -6,6 +6,7 @@ Feel free to fork this template to build your own multiplayer web-game.
 
 - `colyseus` → Multiplayer Framework
 - `@colyseus/auth` → Authentication (Email/Password, OAuth, Anonymous)
+	- "Forgot password" emails are sent using [Resend](https://resend.com/) (See [source-code](https://github.com/endel/colyseus-auth/blob/cfd70dc498fa2c4c83873dac25a16b22e26004a0/packages/backend/src/config/auth.ts#L40-L47))
 - `@colyseus/database` → (Experimental) Kysely-powered database module
 
 **Frontend**
