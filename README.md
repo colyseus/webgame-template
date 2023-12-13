@@ -12,7 +12,7 @@ Feel free to fork this template to build your own multiplayer web-game.
 	- "Forgot password" emails are sent using [Resend](https://resend.com/) (See [source-code](https://github.com/endel/colyseus-auth/blob/cfd70dc498fa2c4c83873dac25a16b22e26004a0/packages/backend/src/config/auth.ts#L40-L47))
 - `@colyseus/database` → (Experimental) Kysely-powered database module
 
-See the authentication configuration: [`packages/backend/src/config/auth.ts`](/blob/main/packages/backend/src/config/auth.ts)
+See the authentication configuration: [`packages/backend/src/config/auth.ts`](/packages/backend/src/config/auth.ts)
 
 **Frontend**
 
