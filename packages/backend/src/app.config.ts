@@ -58,7 +58,7 @@ export default config({
     // This is for convenience only, frontend should be served from a CDN or another server.
     //
     app.use("/", express.static(__dirname + "/../../frontend/dist"));
-    app.get("*", (req, res) => res.redirect("/")); // single-page application
+    app.get("*", (req, res) => res.sendFile(__dirname + "/../../frontend/dist/index.html")); // single-page application
   },
 
   beforeListen: async () => {
