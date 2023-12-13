@@ -19,6 +19,7 @@ export const db = new Database<{
   monthly_scores: MonthlyScore,
 }>({
   log: ['error', 'query'],
+  autoMigrate: true,
 });
 
 export const User = db.collection("users");
