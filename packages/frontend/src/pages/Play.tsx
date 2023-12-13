@@ -62,6 +62,8 @@ function Play() {
         </li>
       </ul>
 
+      <hr className="my-8 border-slate-600" />
+      <p>View <a href="https://github.com/colyseus/webgame-template" className="underline text-gray-300 hover:text-gray-200" target="_blank">source-code</a> on GitHub.</p>
 
     </>
   )
