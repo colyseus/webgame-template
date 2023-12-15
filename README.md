@@ -2,6 +2,8 @@
 
 ![](share.png)
 
+---
+
 **[See it in action! :rocket:](https://us-lax-af65ebed.colyseus.dev)**
 
 Feel free to fork this template to build your own multiplayer web-game.
