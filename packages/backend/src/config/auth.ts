@@ -2,8 +2,6 @@ import { JWT, auth } from "@colyseus/auth";
 import { User } from "./database";
 import { resend } from "./email";
 
-JWT.settings.secret = "secret";
-
 /**
  * Email / Password Authentication
  */
@@ -34,12 +32,21 @@ auth.settings.onRegisterWithEmailAndPassword = async (email, password, options) 
   });
 }
 
-auth.settings.onForgotPassword = async (email: string, htmlContents: string/* , resetPasswordLink: string */) => {
+auth.settings.onSendEmailConfirmation = async (email, html, link) => {
   await resend.emails.send({
     from: 'web-template@colyseus.dev',
     to: email,
     subject: '[Colyseus Web Template]: Reset password',
-    html: htmlContents
+    html,
+  });
+}
+
+auth.settings.onForgotPassword = async (email: string, html: string/* , resetLink: string */) => {
+  await resend.emails.send({
+    from: 'web-template@colyseus.dev',
+    to: email,
+    subject: '[Colyseus Web Template]: Reset password',
+    html,
   });
 }
 
