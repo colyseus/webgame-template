@@ -29,6 +29,13 @@ See the authentication configuration: [`packages/backend/src/config/auth.ts`](/p
 
 Contributions for additions and improvements on this template are very welcome!
 
+---
+
+## Looking the backend configuration example?
+
+- The environment secrets are defined at [`packages/backend/.env.development`](packages/backend/.env.development)
+- The `@colyseus/auth` callbacks are defined at [`packages/backend/src/config/auth.ts`](packages/backend/src/config/auth.ts)
+
 ## License
 
 MIT
