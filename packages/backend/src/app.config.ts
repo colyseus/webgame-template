@@ -27,9 +27,7 @@ export default config({
      * Use @colyseus/playground
      * (It is not recommended to expose this route in a production environment)
      */
-    if (process.env.NODE_ENV !== "production") {
-        app.use("/playground", playground);
-    }
+    app.use("/playground", playground);
 
     app.get("/protected", auth.middleware(), (req: Request, res) => {
       res.json(req.auth);
