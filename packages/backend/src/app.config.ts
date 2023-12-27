@@ -79,12 +79,16 @@ export default config({
         .addColumn("anonymous", "integer")
         .execute();
 
+    } catch (e) {
+      // ignore
+    }
+
+    try {
       await db.schema.createTable("monthly_scores")
         .addColumn("id", "integer", (col) => col.primaryKey())
         .addColumn("user_id", "integer")
         .addColumn("score", "integer")
         .execute();
-
     } catch (e) {
       // ignore
     }

@@ -27,9 +27,6 @@
     "url": "https://github.com/colyseus/webgame-template/issues"
   },
   "homepage": "https://github.com/colyseus/webgame-template#readme",
-  "overrides": {
-    "@colyseus/core": "preview"
-  },
   "devDependencies": {
     "@colyseus/cloud": "^1.0.10"
   }

@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@colyseus/auth": "^0.15.0",
-    "@colyseus/core": "preview",
+    "@colyseus/core": "^0.15.0",
     "@colyseus/database": "^0.0.13",
     "@colyseus/monitor": "^0.15.0",
     "@colyseus/playground": "^0.15.3",
