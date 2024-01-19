@@ -8,8 +8,7 @@
 
 Feel free to fork this template to build your own multiplayer web-game.
 
-> This is a demonstration of the new `@colyseus/auth` package. (See PRs [colyseus/colyseus#657](https://github.com/colyseus/colyseus/pull/657), [colyseus/colyseus.js#133](https://github.com/colyseus/colyseus.js/pull/133))
-> Official documentation coming soon!
+> This is a demonstration of the new `@colyseus/auth` package. ([See documentation](https://docs.colyseus.io/authentication/module/))
 
 **Backend**
 
