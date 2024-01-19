@@ -63,12 +63,23 @@ auth.oauth.addProvider('discord', {
   scope: ['identify', 'email'],
 });
 
+// auth.oauth.defaults.origin = "http://localhost:2567";
+
+auth.oauth.addProvider('twitch', {
+  key: "3a3311zpk0vimb7mjxtw7n1axbidtx",
+  secret: "s78w1l2tyeyvxz25ypovn26q90ky53",
+  scope: ['user:read:email'],
+});
+
 auth.oauth.onCallback(async (data, provider) => {
   const profile = data.profile;
+  console.log("DATA:", data);
+  console.log("PROFILE:", profile);
+
   return await User.upsert({
     discord_id: profile.id,
-    name: profile.global_name || profile.username,
-    locale: profile.locale,
+    name: profile.global_name || profile.username || profile.login,
+    locale: profile.locale || "",
     email: profile.email,
   });
 });

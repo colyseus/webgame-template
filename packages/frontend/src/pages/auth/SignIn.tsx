@@ -134,6 +134,10 @@ function SignIn() {
           Login with Discord
         </button>
 
+        <button onClick={signInWithProvider('twitch')} className="p-2 border rounded border-slate-500 hover:border-slate-400">
+          Login with Twitch
+        </button>
+
         <button onClick={signInWithProvider('google')} className="p-2 border rounded border-slate-500 hover:border-slate-400">
           Login with Google (missing config)
         </button>
