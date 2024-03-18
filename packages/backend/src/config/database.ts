@@ -10,6 +10,7 @@ export interface User extends Collection {
 }
 
 export interface MonthlyScore extends Collection {
+  name: string;
   user_id: number;
   score: number;
 }

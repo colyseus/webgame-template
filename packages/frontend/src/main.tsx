@@ -3,6 +3,7 @@ import './index.css'
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 
+import { AuthProvider } from './contexts/AuthContext.tsx';
 import MainLayout from './layouts/MainLayout.tsx';
 import Play from './pages/Play.tsx'
 import Leaderboard from './pages/Leaderboard.tsx';
@@ -12,8 +13,8 @@ import Credits from './pages/Credits.tsx';
 import Game from './game/Game.tsx';
 import SignIn from './pages/auth/SignIn.tsx';
 import CreateAccount from './pages/auth/CreateAccount.tsx';
-import { AuthProvider } from './contexts/AuthContext.tsx';
 import Profile from './pages/auth/Profile.tsx';
+import DiscordActivity from './game/DiscordActivity.tsx';
 
 // function RequireAuth({ children }: { children: JSX.Element }) {
 //   let auth = useAuth();
@@ -45,6 +46,8 @@ const router = createBrowserRouter([
 
       { path: "/sign-in", element: <SignIn /> },
       { path: "/create-account", element: <CreateAccount /> },
+
+      { path: "/discord-activity", element: <DiscordActivity /> },
 
       // { path: "/profile", element: <Profile /> },
       // { path: "/logout", element: <Logout /> },

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Room } from "colyseus.js";
 
-import { MyRoomState, Player } from "../../../backend/src/rooms/MyRoom";
-import { client } from '../core/Networking';
+import { MyRoomState } from "../../../backend/src/rooms/MyRoom";
+import Networking  from '../core/Networking';
 
 function Game() {
 	const roomRef = useRef<Room<MyRoomState>>();
@@ -11,10 +11,11 @@ function Game() {
 	const [players, setPlayers] = useState({} as any); // TODO: use ToJSON<> type
 
 	useEffect(() => {
-		const roomRequest = client.joinOrCreate<MyRoomState>("my_room", {});
+		const roomRequest = Networking.client.joinOrCreate<MyRoomState>("my_room", {});
 
 		roomRequest.then((room) => {
 			roomRef.current = room;
+			Networking.room = room;
 
 			setIsLoading(false);
 

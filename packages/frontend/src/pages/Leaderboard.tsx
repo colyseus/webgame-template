@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
-import { client } from "../core/Networking";
+import Networking from "../core/Networking";
 
 function Leaderboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [leaderboardEntries, setLeaderboardEntries] = useState([] as any[]);
 
   useEffect(() => {
-    client.http.get("/leaderboard").then((response) => {
+    Networking.client.http.get("/api/leaderboard").then((response) => {
+      console.log("RESPONSE:", response);
       setIsLoading(false);
       setLeaderboardEntries(response.data);
     });
@@ -27,7 +28,7 @@ function Leaderboard() {
           </thead>
           <tbody>
           {(isLoading)
-            ?  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            ? <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th colSpan={3} scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   Loading...
                 </th>

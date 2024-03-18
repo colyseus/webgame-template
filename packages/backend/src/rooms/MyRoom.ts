@@ -7,6 +7,7 @@ import { Selectable } from "@colyseus/database/lib";
 export class Player extends Schema {
   @type("string") name: string;
   @type("number") score: number = 0;
+  @type("boolean") speaking: boolean = false;
 }
 
 export class MyRoomState extends Schema {
@@ -32,6 +33,12 @@ export class MyRoom extends Room<MyRoomState> {
         this.state.highestScore = player.score;
       }
     });
+
+    this.onMessage("speaking", (client, payload) => {
+      const player = this.state.players.get(client.sessionId);
+      player.speaking = (payload === true);
+    });
+
   }
 
   onJoin (client: Client, options: any) {

@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs";
 import express from "express";
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
@@ -29,13 +30,13 @@ export default config({
      */
     app.use("/playground", playground);
 
-    app.get("/protected", auth.middleware(), (req: Request, res) => {
+    app.get("/api/protected", auth.middleware(), (req: Request, res) => {
       res.json(req.auth);
     });
 
-    app.get('/leaderboard', async (req, res) => {
+    app.get('/api/leaderboard', async (req, res) => {
       const scores = await MonthlyScore.query()
-        .selectAll()
+        .select(["user_id", "name", "score"])
         .innerJoin("users", "users.id", "monthly_scores.user_id")
         .orderBy("score", "desc")
         .execute();
@@ -57,7 +58,17 @@ export default config({
     // This is for convenience only, frontend should be served from a CDN or another server.
     //
     app.use("/", express.static(__dirname + "/../../frontend/dist"));
-    app.get("*", (req, res) => res.sendFile(path.normalize(__dirname + "/../../frontend/dist"))); // single-page application
+
+    // single-page application. respond with index.html for all requests
+    app.get("/:resource", (req, res) => {
+      const resource = req.params.resource;
+      const dir = path.normalize(__dirname + "/../../frontend/dist");
+      if (fs.existsSync(path.resolve(dir, resource))) {
+        res.sendFile(path.resolve(dir, resource));
+      } else {
+        res.sendFile(path.resolve(dir, "index.html"));
+      }
+    });
   },
 
   beforeListen: async () => {

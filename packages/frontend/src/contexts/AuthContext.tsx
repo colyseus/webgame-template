@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { client } from '../core/Networking';
+import Networking from '../core/Networking';
 import type { User } from '../../../backend/src/config/database';
 
 interface AuthContextType {
@@ -22,10 +22,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const logout = () => client.auth.signOut();
+  const logout = () => Networking.client.auth.signOut();
 
   useEffect(() => {
-    const unsubscribe = client.auth.onChange((authData) => {
+    const unsubscribe = Networking.client.auth.onChange((authData) => {
       setIsLoading(false);
       setUser(authData?.user || null);
     });
