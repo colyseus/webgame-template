@@ -58,8 +58,8 @@ auth.settings.onResetPassword = async (email: string, password: string) => {
  * OAuth providers
  */
 auth.oauth.addProvider('discord', {
-  key: "799645393566695465",
-  secret: "Kjv9bvAa9ZRBe8LBM5ZJ6bJsH0o44HdT",
+  key: process.env.DISCORD_CLIENT_ID,
+  secret: process.env.DISCORD_CLIENT_SECRET,
   scope: ['identify', 'email'],
 });
 

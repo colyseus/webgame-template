@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Room } from "colyseus.js";
 
 import { MyRoomState } from "../../../backend/src/rooms/MyRoom";
-import Networking  from '../core/Networking';
+import Network  from '../core/Network';
+
+import { discordSdk, isEmbedded } from '../core/DiscordSDK';
+import { Events } from '@discord/embedded-app-sdk';
 
 function Game() {
 	const roomRef = useRef<Room<MyRoomState>>();
@@ -10,12 +13,26 @@ function Game() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [players, setPlayers] = useState({} as any); // TODO: use ToJSON<> type
 
+	if (isEmbedded) {
+		useEffect(() => {
+			const handleSpeakingStart = () => roomRef.current!.send("speaking", true);
+			const handleSpeakingStop = () => roomRef.current!.send("speaking", false);
+
+			discordSdk.subscribe(Events.SPEAKING_START, handleSpeakingStart, { channel_id: discordSdk.channelId });
+			discordSdk.subscribe(Events.SPEAKING_STOP, handleSpeakingStop, { channel_id: discordSdk.channelId });
+
+			return () => {
+				discordSdk.unsubscribe(Events.SPEAKING_START, handleSpeakingStart);
+				discordSdk.unsubscribe(Events.SPEAKING_STOP, handleSpeakingStop);
+			};
+		}, []);
+	}
+
 	useEffect(() => {
-		const roomRequest = Networking.client.joinOrCreate<MyRoomState>("my_room", {});
+		const roomRequest = Network.client.joinOrCreate<MyRoomState>("my_room", {});
 
 		roomRequest.then((room) => {
 			roomRef.current = room;
-			Networking.room = room;
 
 			setIsLoading(false);
 
@@ -24,7 +41,6 @@ function Game() {
 
 		return () => {
 			roomRequest.then((room) => {
-				console.log("WILL leave", room.roomId);
 				room.leave();
 			});
 		};

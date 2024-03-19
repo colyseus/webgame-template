@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import Networking from "../../core/Networking";
+import Network from "../../core/Network";
 import { Navigate } from "react-router-dom";
 
 function CreateAccount() {
@@ -19,7 +19,7 @@ function CreateAccount() {
     const password = event.currentTarget.password.value;
     try {
       setIsLoading(true);
-      await Networking.client.auth.registerWithEmailAndPassword(email, password, {
+      await Network.client.auth.registerWithEmailAndPassword(email, password, {
         locale: "br",
         birthdate: new Date(),
         custom_data: [1,2,3,4],

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import Networking from "../core/Networking";
+import Network from "../core/Network";
 
 function Leaderboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [leaderboardEntries, setLeaderboardEntries] = useState([] as any[]);
 
   useEffect(() => {
-    Networking.client.http.get("/api/leaderboard").then((response) => {
+    Network.client.http.get("/api/leaderboard").then((response) => {
       console.log("RESPONSE:", response);
       setIsLoading(false);
       setLeaderboardEntries(response.data);

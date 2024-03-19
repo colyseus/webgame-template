@@ -1,4 +1,4 @@
-import { DiscordSDK, DiscordSDKMock } from '@discord/embedded-app-sdk';
+import { DiscordSDK, DiscordSDKMock, Events } from '@discord/embedded-app-sdk';
 
 const queryParams = new URLSearchParams(window.location.search);
 const isEmbedded = queryParams.get('frame_id') != null;
@@ -73,4 +73,49 @@ function getOverrideOrRandomSessionValue(queryParam: `${SessionStorageQueryParam
   return randomString;
 }
 
-export { discordSdk };
+const getEmbeddedDiscordAuth = async () => {
+  await discordSdk.ready();
+
+  // Authorize with Discord Client
+  const { code } = await discordSdk.commands.authorize({
+    client_id: DISCORD_CLIENT_ID,
+    response_type: 'code',
+    state: '',
+    prompt: 'none',
+    // More info on scopes here: https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes
+    scope: [
+      // "applications.builds.upload",
+      // "applications.builds.read",
+      // "applications.store.update",
+      // "applications.entitlements",
+      // "bot",
+      'identify',
+      // "connections",
+      // "email",
+      // "gdm.join",
+      'guilds',
+      // "guilds.join",
+      'guilds.members.read',
+      // "messages.read",
+      // "relationships.read",
+      // 'rpc.activities.write',
+      // "rpc.notifications.read",
+      // "rpc.voice.write",
+      'rpc.voice.read',
+      // "webhook.incoming",
+    ],
+  });
+
+  // Retrieve an access_token from your embedded app's server
+  const response = await fetch('/api/discord_token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', },
+    body: JSON.stringify({ code, }),
+  });
+  const { access_token } = await response.json();
+
+  // Authenticate with Discord client (using the access_token)
+  return await discordSdk.commands.authenticate({ access_token, });
+};
+
+export { discordSdk, isEmbedded, getEmbeddedDiscordAuth };

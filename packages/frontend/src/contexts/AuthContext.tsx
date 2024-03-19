@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import Networking from '../core/Networking';
+import Network from '../core/Network';
 import type { User } from '../../../backend/src/config/database';
+import { getEmbeddedDiscordAuth, isEmbedded as isDiscordEmbeddedActivity } from '../core/DiscordSDK';
 
 interface AuthContextType {
-  user: User | null;
+  user: Partial<User> | null;
   isLoading: boolean,
   logout: () => void;
 }
@@ -22,15 +23,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const logout = () => Networking.client.auth.signOut();
+  const logout = () => Network.client.auth.signOut();
 
   useEffect(() => {
-    const unsubscribe = Networking.client.auth.onChange((authData) => {
-      setIsLoading(false);
-      setUser(authData?.user || null);
-    });
+    //
+    // Discord Embedded Activity
+    //
+    if (isDiscordEmbeddedActivity) {
+      getEmbeddedDiscordAuth().then((auth) => {
+        console.log("Embedded Discord user", auth);
 
-    return () => unsubscribe();
+        setUser({
+          // @ts-ignore
+          id: auth.user.id,
+          name: auth.user.username,
+        });
+
+      }).catch(() => {
+        setUser(null);
+      });
+
+    } else {
+      //
+      // Regular Web App
+      //
+      const unsubscribe = Network.client.auth.onChange((authData) => {
+        setIsLoading(false);
+        setUser(authData?.user || null);
+      });
+
+      return () => unsubscribe();
+    }
+
   }, []);
 
   return (

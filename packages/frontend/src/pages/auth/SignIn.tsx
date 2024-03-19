@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Networking from "../../core/Networking";
+import Network from "../../core/Network";
 import { useAuth } from "../../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
 
@@ -24,7 +24,7 @@ function SignIn() {
     const password = event.currentTarget.password.value;
     try {
       setIsLoading(true);
-      await Networking.client.auth.signInWithEmailAndPassword(email, password);
+      await Network.client.auth.signInWithEmailAndPassword(email, password);
 
     } catch (e: any) {
       setSignInError(`${e.name} - ${e.message}`);
@@ -43,7 +43,7 @@ function SignIn() {
 
     const email = event.currentTarget.email.value;
     try {
-      const result = await Networking.client.auth.sendPasswordResetEmail(email);
+      const result = await Network.client.auth.sendPasswordResetEmail(email);
       console.log({ result });
       setResetPasswordSuccess("Check your email");
 
@@ -59,7 +59,7 @@ function SignIn() {
     try {
       setIsLoading(true);
       setSignInAnonymously(true);
-      await Networking.client.auth.signInAnonymously();
+      await Network.client.auth.signInAnonymously();
 
     } catch (e) {
       console.error(e);
@@ -74,7 +74,7 @@ function SignIn() {
     return async () => {
       try {
         setIsLoading(true);
-        await Networking.client.auth.signInWithProvider(provider);
+        await Network.client.auth.signInWithProvider(provider);
 
       } catch (e) {
         console.error(e);

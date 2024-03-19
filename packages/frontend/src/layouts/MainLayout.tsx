@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import templateLogo from '/template-logo.png';
 import { useAuth } from '../contexts/AuthContext';
+import { isEmbedded } from '../core/DiscordSDK';
 
 const getNavLinkClassName = ({ isActive, isPending }: { isActive: boolean, isPending: boolean }) => {
   const className = "flex items-center justify-center flex-grow hover:bg-gray-700 transition-colors duration-100 w-full border-b border-gray-700";
@@ -23,15 +24,17 @@ function MainLayout() {
 
         {/* Login / Register / Profile */}
         <div className="ml-auto p-8 flex-end my-auto">
-          {(isLoading)
-            ? "Loading..."
-            : (user)
-              ? <>
-                  <Link to={'/profile'} className="underline">{user.name || user.email || "Anonymous"}</Link> (<Link to={'/'} onClick={logout} className="text-yellow-500">Logout</Link>)
-                </>
-              : <>
-                  <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>
-                </>}
+          {(isEmbedded)
+            ? user?.name || "Loading..."
+            : (isLoading)
+              ? "Loading..."
+              : (user)
+                ? <>
+                    <Link to={'/profile'} className="underline">{user.name || user.email || "Anonymous"}</Link> (<Link to={'/'} onClick={logout} className="text-yellow-500">Logout</Link>)
+                  </>
+                : <>
+                    <Link to={'/sign-in'}>Sign in</Link> | <Link to={'/create-account'}>Create account</Link>
+                  </>}
         </div>
       </header>
 

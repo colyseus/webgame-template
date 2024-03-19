@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Networking from '../core/Networking';
+import Network from '../core/Network';
 
 function Play() {
   const [profileResponse, setProfileResponse] = useState<any>(null);
@@ -9,7 +9,7 @@ function Play() {
   const onClickRequestProtectedRoute = async () => {
     setIsRequestLoading(true);
     try {
-      const response = await Networking.client.http.get("/api/protected");
+      const response = await Network.client.http.get("/api/protected");
       setProfileResponse(response.data);
     } catch (e: any) {
       setProfileResponse({ error: e.message });
