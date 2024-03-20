@@ -118,7 +118,7 @@ const getEmbeddedDiscordAuth = async () => {
   console.log("/api/discord_token RESPONSE =>", data);
 
   // Authenticate with Discord client (using the access_token)
-  return data.user;
+  return data;
 };
 
 export { discordSdk, isEmbedded, getEmbeddedDiscordAuth };

@@ -48,6 +48,7 @@ export default config({
     //
     app.post('/api/discord_token', async (req, res) => {
       try {
+        // retrieve access token from Discord API
         const response = await fetch(`https://discord.com/api/oauth2/token`, {
           method: 'POST',
           headers: {
@@ -62,6 +63,7 @@ export default config({
         });
         const { access_token } = await response.json();
 
+        // retrieve user data from Discord API
         const userdata = await (await fetch(`https://discord.com/api/users/@me`, {
           method: "GET",
           headers: {
@@ -70,12 +72,16 @@ export default config({
           }
         })).json();
 
-        console.log("USERDATA: ", userdata);
+        // normalize user data
+        const user = {
+          id: userdata.id,
+          name: userdata.username,
+          email: userdata.email,
+          discord_id: userdata.id,
+          locale: userdata.locale,
+        };
 
-        res.send({
-          token: JWT.sign(userdata),
-          user: userdata
-        });
+        res.send({ token: JWT.sign(user), user });
 
       } catch (e: any) {
         res.status(400).send({ error: e.message });
