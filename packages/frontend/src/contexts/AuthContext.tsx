@@ -33,14 +33,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       getEmbeddedDiscordAuth().then((auth) => {
         console.log("Embedded Discord user", auth);
 
-        setUser({
-          // @ts-ignore
-          id: auth.user.id,
-          name: auth.user.username,
-        });
+        // @ts-ignore
+        setUser({ id: auth.user.id, name: auth.user.username, });
 
       }).catch(() => {
         setUser(null);
+
+      }).finally(() => {
+        setIsLoading(false);
       });
 
     } else {
