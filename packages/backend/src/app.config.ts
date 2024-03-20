@@ -13,6 +13,7 @@ import "./config/auth";
  */
 import { MyRoom } from "./rooms/MyRoom";
 import { db, MonthlyScore } from "./config/database";
+import { createUser } from "./config/auth";
 
 export default config({
 
@@ -64,7 +65,7 @@ export default config({
         const { access_token } = await response.json();
 
         // retrieve user data from Discord API
-        const userdata = await (await fetch(`https://discord.com/api/users/@me`, {
+        const profile = await (await fetch(`https://discord.com/api/users/@me`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -73,13 +74,7 @@ export default config({
         })).json();
 
         // normalize user data
-        const user = {
-          id: userdata.id,
-          name: userdata.username,
-          email: userdata.email,
-          discord_id: userdata.id,
-          locale: userdata.locale,
-        };
+        const user = await createUser(profile);
 
         res.send({
           access_token, // Discord Access Token

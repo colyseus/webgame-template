@@ -76,10 +76,14 @@ auth.oauth.onCallback(async (data, provider) => {
   console.log("DATA:", data);
   console.log("PROFILE:", profile);
 
-  return await User.upsert({
+  return await createUser(profile);
+});
+
+export function createUser(profile: any) {
+  return User.upsert({
     discord_id: profile.id,
     name: profile.global_name || profile.username || profile.login,
     locale: profile.locale || "",
     email: profile.email,
-  });
-});
+  })
+}
