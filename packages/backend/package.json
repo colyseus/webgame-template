@@ -39,7 +39,7 @@
     "@colyseus/monitor": "^0.15.0",
     "@colyseus/playground": "^0.15.3",
     "@colyseus/redis-presence": "^0.15.4",
-    "@colyseus/tools": "^0.15.25",
+    "@colyseus/tools": "^0.15.36",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "resend": "^2.0.0"

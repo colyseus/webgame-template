@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm start --workspaces",
     "build": "npm run build --workspaces",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npx @colyseus/cloud deploy"
   },
   "workspaces": [
     "packages/*"
