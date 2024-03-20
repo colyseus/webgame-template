@@ -1,4 +1,4 @@
-import { DiscordSDK, DiscordSDKMock, Events } from '@discord/embedded-app-sdk';
+import { DiscordSDK, DiscordSDKMock } from '@discord/embedded-app-sdk';
 
 const queryParams = new URLSearchParams(window.location.search);
 const isEmbedded = queryParams.get('frame_id') != null;

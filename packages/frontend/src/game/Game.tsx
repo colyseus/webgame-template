@@ -13,10 +13,20 @@ function Game() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [players, setPlayers] = useState({} as any); // TODO: use ToJSON<> type
 
+	//
+	// When embedded as Discord Activity, listen to local SPEAKING events
+	// send it to the server
+	//
 	if (isEmbedded) {
 		useEffect(() => {
-			const handleSpeakingStart = () => roomRef.current!.send("speaking", true);
-			const handleSpeakingStop = () => roomRef.current!.send("speaking", false);
+			const handleSpeakingStart = () => {
+				console.log("SPEAKING TRUE!")
+				roomRef.current!.send("speaking", true);
+			};
+			const handleSpeakingStop = () => {
+				console.log("SPEAKING FALSE!")
+				roomRef.current!.send("speaking", false);
+			}
 
 			discordSdk.subscribe(Events.SPEAKING_START, handleSpeakingStart, { channel_id: discordSdk.channelId });
 			discordSdk.subscribe(Events.SPEAKING_STOP, handleSpeakingStop, { channel_id: discordSdk.channelId });

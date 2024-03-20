@@ -37,6 +37,7 @@ export class MyRoom extends Room<MyRoomState> {
     this.onMessage("speaking", (client, payload) => {
       const player = this.state.players.get(client.sessionId);
       player.speaking = (payload === true);
+      console.log("SPEAKING??", { payload });
     });
 
   }
