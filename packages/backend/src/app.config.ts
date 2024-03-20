@@ -5,7 +5,7 @@ import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
 
-import { Request, auth } from "@colyseus/auth";
+import { JWT, Request, auth } from "@colyseus/auth";
 import "./config/auth";
 
 /**
@@ -47,21 +47,39 @@ export default config({
     // Discord Embedded SDK: Retrieve user token when under Discord/Embed
     //
     app.post('/api/discord_token', async (req, res) => {
-      const response = await fetch(`https://discord.com/api/oauth2/token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          client_id: process.env.DISCORD_CLIENT_ID,
-          client_secret: process.env.DISCORD_CLIENT_SECRET,
-          grant_type: 'authorization_code',
-          code: req.body.code,
-        }),
-      });
-      const data = await response.json();
-      console.log("/api/discord_token, data ->", data);
-      res.send({ access_token: data.access_token });
+      try {
+        const response = await fetch(`https://discord.com/api/oauth2/token`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            client_id: process.env.DISCORD_CLIENT_ID,
+            client_secret: process.env.DISCORD_CLIENT_SECRET,
+            grant_type: 'authorization_code',
+            code: req.body.code,
+          }),
+        });
+        const { access_token } = await response.json();
+
+        const userdata = await (await fetch(`https://discord.com/api/users/@me`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': `Bearer ${access_token}`,
+          }
+        })).json();
+
+        console.log("USERDATA: ", userdata);
+
+        res.send({
+          token: JWT.sign(userdata),
+          user: userdata
+        });
+
+      } catch (e: any) {
+        res.status(400).send({ error: e.message });
+      }
     });
 
     // Auth + OAuth providers

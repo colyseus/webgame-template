@@ -30,11 +30,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Discord Embedded Activity
     //
     if (isDiscordEmbeddedActivity) {
-      getEmbeddedDiscordAuth().then((auth) => {
-        console.log("Embedded Discord user", auth);
+      getEmbeddedDiscordAuth().then((data) => {
+        console.log("Embedded Discord user", data);
+
+        Network.client.auth.token = data.token;
 
         // @ts-ignore
-        setUser({ id: auth.user.id, name: auth.user.username, });
+        setUser({ id: data.user.id, name: data.user.username, });
 
       }).catch(() => {
         setUser(null);

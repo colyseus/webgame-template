@@ -112,10 +112,13 @@ const getEmbeddedDiscordAuth = async () => {
     headers: { 'Content-Type': 'application/json', },
     body: JSON.stringify({ code, }),
   });
-  const { access_token } = await response.json();
+
+  const data = await response.json();
+
+  console.log("/api/discord_token RESPONSE =>", data);
 
   // Authenticate with Discord client (using the access_token)
-  return await discordSdk.commands.authenticate({ access_token, });
+  return data.user;
 };
 
 export { discordSdk, isEmbedded, getEmbeddedDiscordAuth };
