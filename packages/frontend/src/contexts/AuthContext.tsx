@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         Network.client.auth.token = data.token;
 
         // @ts-ignore
-        setUser({ id: data.user.id, name: data.user.username, });
+        setUser({ id: data.user.discord_id, name: data.user.name, });
 
       }).catch(() => {
         setUser(null);

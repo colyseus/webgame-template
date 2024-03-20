@@ -81,7 +81,8 @@ export default config({
           locale: userdata.locale,
         };
 
-        res.send({ token: JWT.sign(user), user });
+
+        res.send({ token: await JWT.sign(user), user });
 
       } catch (e: any) {
         res.status(400).send({ error: e.message });
