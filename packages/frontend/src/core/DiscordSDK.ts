@@ -113,7 +113,15 @@ const getEmbeddedDiscordAuth = async () => {
     body: JSON.stringify({ code, }),
   });
 
-  return await response.json();
+  const data = await response.json();
+
+  //
+  // Authenticate with the token, so we can use the Discord API
+  // This is required to listen to SPEAKING events
+  //
+  await discordSdk.commands.authenticate({ access_token: data.access_token, });
+
+  return data;
 };
 
 export { discordSdk, isEmbedded, getEmbeddedDiscordAuth };

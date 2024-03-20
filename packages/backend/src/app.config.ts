@@ -81,7 +81,11 @@ export default config({
           locale: userdata.locale,
         };
 
-        res.send({ token: await JWT.sign(user), user });
+        res.send({
+          access_token, // Discord Access Token
+          token: await JWT.sign(user), // Colyseus JWT token
+          user // User data
+        });
 
       } catch (e: any) {
         res.status(400).send({ error: e.message });
