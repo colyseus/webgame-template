@@ -69,7 +69,7 @@ function Game() {
 
 						<div className="flex flex-wrap gap-2">
 							{(Object.keys(players).sort((a, b) => players[b].score - players[a].score).map((sessionId) => (
-								<span key={sessionId} className={`${(sessionId === roomRef.current?.sessionId) ? "bg-blue-300 text-blue-800" : "bg-slate-700"} mb-2 shadow-md p-4 rounded-lg `}>
+								<span key={sessionId} className={`${(sessionId === roomRef.current?.sessionId) ? "bg-blue-300 text-blue-800" : "bg-slate-700"} mb-2 shadow-md p-4 rounded-lg border-2  ${(players[sessionId].speaking) ? "border-green-300" : "border-inherit"}`}>
 									{players[sessionId].name} - Score: {players[sessionId].score}
 								</span>
 							)))}
