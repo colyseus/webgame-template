@@ -73,7 +73,7 @@ export default config({
           }
         })).json();
 
-        // normalize user data
+        // upsert user into the database
         const user = await createUser(profile);
 
         res.send({
