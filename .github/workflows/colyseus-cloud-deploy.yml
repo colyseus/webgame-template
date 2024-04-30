@@ -9,8 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      applicationId: ${{ vars.APPLICATION_ID }}
-      token: ${{ vars.TOKEN }}
+      applicationId: ${{ secrets.APPLICATION_ID }}
+      token: ${{ secrets.TOKEN }}
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js
