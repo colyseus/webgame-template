@@ -18,4 +18,4 @@ jobs:
     - name: Trigger deployment
       run: |
         npm install -g @colyseus/cloud
-        @colyseus/cloud deploy
+        npx @colyseus/cloud deploy
