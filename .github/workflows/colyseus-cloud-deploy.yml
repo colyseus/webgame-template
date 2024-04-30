@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      applicationId: ${{ vars.APPLICATION_ID }}
+      token: ${{ vars.TOKEN }}
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js
@@ -18,4 +21,4 @@ jobs:
     - name: Trigger deployment
       run: |
         npm install -g @colyseus/cloud
-        npx @colyseus/cloud deploy
+        npx @colyseus/cloud deploy --applicationId $applicationId --token $token
