@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/colyseus/webgame-template#readme",
   "devDependencies": {
-    "@colyseus/cloud": "^1.0.10"
+    "@colyseus/cloud": "^1.0.11"
   }
 }
