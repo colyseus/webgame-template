@@ -17,7 +17,7 @@ import { createUser } from "./config/auth";
 import { uWebSocketsTransport } from "@colyseus/uwebsockets-transport";
 
 export default config({
-  initializeTransport: (options) => new uWebSocketsTransport(),
+  initializeTransport: (options) => new uWebSocketsTransport(options),
 
   initializeGameServer: (gameServer) => {
     /**
