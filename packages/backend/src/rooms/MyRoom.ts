@@ -1,3 +1,4 @@
+import { IncomingMessage } from "http";
 import { Room, Client } from "@colyseus/core";
 import { Schema, MapSchema, type } from "@colyseus/schema";
 import { JWT } from "@colyseus/auth";
@@ -17,7 +18,8 @@ export class MyRoomState extends Schema {
 
 export class MyRoom extends Room<MyRoomState> {
 
-  static async onAuth(token: string) {
+  static async onAuth(token: string, req: IncomingMessage) {
+    console.log("COOKIE:", req.headers.cookie);
     return (token) ? await JWT.verify(token) : { guest: true };
   }
 
