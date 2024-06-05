@@ -34,7 +34,7 @@ auth.settings.onRegisterWithEmailAndPassword = async (email, password, options) 
 
 auth.settings.onSendEmailConfirmation = async (email, html, link) => {
   await resend.emails.send({
-    from: 'web-template@colyseus.dev',
+    from: 'web-template@colyseus.io',
     to: email,
     subject: '[Colyseus Web Template]: Reset password',
     html,
@@ -43,7 +43,7 @@ auth.settings.onSendEmailConfirmation = async (email, html, link) => {
 
 auth.settings.onForgotPassword = async (email: string, html: string/* , resetLink: string */) => {
   await resend.emails.send({
-    from: 'web-template@colyseus.dev',
+    from: 'web-template@colyseus.io',
     to: email,
     subject: '[Colyseus Web Template]: Reset password',
     html,
