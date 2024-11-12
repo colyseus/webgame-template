@@ -88,4 +88,12 @@ export class MyRoom extends Room<MyRoomState> {
     console.log("room", this.roomId, "disposing...");
   }
 
+  onBeforeShutdown() {
+    this.broadcast("going-away");
+
+    this.clock.setTimeout(() => {
+      this.disconnect();
+    }, 10 * 1000);
+  }
+
 }
