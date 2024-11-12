@@ -88,12 +88,17 @@ export class MyRoom extends Room<MyRoomState> {
     console.log("room", this.roomId, "disposing...");
   }
 
+  /**
+   * When shutting down the process:
+   * - broadcast a message to all clients
+   * - wait 30 seconds before allowing the process to shutdown
+   */
   onBeforeShutdown() {
     this.broadcast("going-away");
 
     this.clock.setTimeout(() => {
       this.disconnect();
-    }, 10 * 1000);
+    }, 30 * 1000);
   }
 
 }
